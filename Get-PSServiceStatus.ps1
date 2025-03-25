@@ -27,7 +27,8 @@ param (
         }
         else 
         {
-            $CurrentStatus = 'Not Running'    
+            $CurrentStatus = 'Not Running'
+			Start-Service -Name $Service    
         }
         
         #Current status running and previous up
@@ -59,7 +60,7 @@ param (
         {
             Write-Warning -Message "$Service is not running"
             New-Item -Path $NewPath -ItemType File -Force | Out-Null
-            Send-MailMessage -Body ' ' -From $FromAddress -SmtpServer $SmtpServer -Subject "$Service is not running" -To $ToAddress 
+            Send-MailMessage -Body ' ' -From $FromAddress -SmtpServer $SmtpServer -Subject "$Service is not running, attempting restart" -To $ToAddress 
             Continue
         }
     }
